@@ -22,7 +22,7 @@ Common functions:
 
 ## Problems
 
-##### 1. **Compute pi with Monte-Carlo approach**
+#### 1. **Compute pi with Monte-Carlo approach**
 Suppose we throw darts at a square target with sides measuring 2 meters, with the center of the 
 target being the origin (0,0) of the coordinate system. Suppose also that a circle is inscribed in this square target . The radius of the circle is 1 meter and its area is π square meters. If the points where the darts land are uniformly distributed (and the darts always hit the square target), then the number of arrows that hit the interior of the circle should approximately satisfy the equation:  
             ``` circle_arrows  / number_of_throws = π / 4 ```
@@ -40,7 +40,7 @@ for (throw = 0; throw < number_of_throws; throw++) {
 estimate_π = 4*circle_arrows/((double) number_of_throws);
 ```
 
-#####  2. **Matrix Multiplication**
+####  2. **Matrix Multiplication**
 
 Given the dimensions of two matrices, we randomly generate them initializing them with *double* values. First matrix(A) is divided between the threads by rows and the second matrix(B) by columns:
 
@@ -62,7 +62,7 @@ We use two approaches to solve it.
 - Using the padding technique:
  Adding unused "padding" bytes around per-thread data, each thread's data occupies it's own cache line, so no more than one thread touches the same line.
 
-##### 3. **Readers and Writers** 
+#### 3. **Readers and Writers** 
 It's a classic synchronization problem used to illustrate and solve common concurrency issues, specifically dealing with shared resources where multiple processes or threads need to access the same data.
 
 The Core Problem
@@ -81,6 +81,7 @@ Two approaches:
 2.  Giving priority to waiting Writers
     - A Reader is blocked if a Writer is either active OR waiting.
     - A Writer only blocks if a Reader is active OR another Writer is active.
+
 
 
 
