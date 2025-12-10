@@ -31,7 +31,7 @@ void *Thread_task(void *rank){
             while (shared_resources.wait_wrt || shared_resources.writing)
             {
                 shared_resources.wait_read++;
-                pthread_cond_wait(&shared_resources.cond, &shared_resources.data_mtx); // tha ksipnisei mono otan den exei writers ? checkare
+                pthread_cond_wait(&shared_resources.cond, &shared_resources.data_mtx);
                 shared_resources.wait_read--;
             }
 
@@ -87,3 +87,4 @@ void *Thread_task(void *rank){
 
     return NULL;
 } /* Thread_work */
+
