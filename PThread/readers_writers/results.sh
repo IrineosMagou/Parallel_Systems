@@ -125,7 +125,7 @@ run_benchmark "${SRC_PRIORITY[1]}" "$1" "$2" "$3" "$4"
 [[ -f $EXEC ]] && rm "$EXEC"
 
 echo "======================================================"
-echo "✅ ALL BENCHMARKS COMPLETE"
+echo " --> ALL BENCHMARKS COMPLETE"
 echo "Thread Averages per Program:"
 for prog in "${!PROGRAM_TIMES[@]}"; do
     echo "  $prog: ${PROGRAM_TIMES[$prog]}"
