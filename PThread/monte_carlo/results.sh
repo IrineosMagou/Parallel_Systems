@@ -35,7 +35,7 @@ function compile_program {
     
     # Compile the Monte Carlo program
     # Using global constants
-    gcc -o "$EXECUTABLE" "$SOURCE_CODE.c" "$HELPER_CODE.c" -lpthread -lm
+    gcc -o "$EXECUTABLE" "$SOURCE_CODE.c" "$HELPER_CODE.c" -lpthread
     
     if [ $? -ne 0 ]; then
         echo "❌ Compilation FAILED. Aborting." >&2
