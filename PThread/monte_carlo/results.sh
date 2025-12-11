@@ -30,7 +30,7 @@ declare -A avg_times # Global associative array to store results
 
 function compile_program {
     echo "======================================================"
-    echo "▶️  Compiling: $SOURCE_CODE.c with $HELPER_CODE.c"
+    echo " --> Compiling: $SOURCE_CODE.c with $HELPER_CODE.c"
     echo "======================================================"
     
     # Compile the Monte Carlo program
@@ -38,7 +38,7 @@ function compile_program {
     gcc -o "$EXECUTABLE" "$SOURCE_CODE.c" "$HELPER_CODE.c" -lpthread
     
     if [ $? -ne 0 ]; then
-        echo "❌ Compilation FAILED. Aborting." >&2
+        echo "Compilation FAILED. Aborting." >&2
         exit 1
     fi
 }
@@ -72,7 +72,7 @@ function run_and_average {
         
         # Robust check to prevent bc errors
         if [ -z "$current_time" ]; then
-            echo "🚨 Error: Could not extract time for $program_type. Check output format." >&2
+            echo "Error: Could not extract time for $program_type. Check output format." >&2
             current_time=0.0
         fi
 
@@ -109,7 +109,7 @@ done
 # --- Speedup Calculation & Final Output ---
 
 echo "======================================================"
-echo "📊 BENCHMARK RESULTS"
+echo " --> BENCHMARK RESULTS"
 echo "======================================================"
 
 # Check if serial time (key 1) exists before calculating speedup
