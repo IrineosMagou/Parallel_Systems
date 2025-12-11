@@ -5,7 +5,7 @@
  *     Estimation of pi
  * Compile:  
  *     1. Terminal Command:
- *              gcc -Wall -o executable monte_carlo.c ../../helpers?/my_rand.c -lpthread
+ *              gcc -Wall -o executable monte_carlo.c ../../helpers/my_rand.c -lpthread
  *     2. Makefile:
  *              make
  * Usage:
@@ -151,4 +151,5 @@ int main(int argc, char *argv[]){
     free(thread_data);
     
     return EXIT_SUCCESS;
+
 }
