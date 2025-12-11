@@ -11,7 +11,7 @@ readonly NUM_THROWS=$1
 # Source and File Configuration
 readonly SOURCE_CODE="monte_carlo"
 readonly HELPER_CODE="../../helpers/my_rand"
-readonly EXECUTABLE="./monte_carlo_exec"
+readonly EXECUTABLE="executable"
 
 # Benchmarking Parameters
 readonly THREAD_STEP=2
