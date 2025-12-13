@@ -7,7 +7,7 @@ This repository contains  a series of projects that explore **parallel programmi
 
 Each subdirectory demonstrates a different method of parallelization in C, including:
 - **Pthreads** -- Low-level thread creation and management.
-- **OpenMP**   -- Compiler-assistes parallelism using pragmatic directives.
+- **OpenMP**   -- Compiler-assisted parallelism using pragmatic directives.
 - **MPI**      -- Message passing for distributed systems and multi-node parallelism.
 
 These projects highlight the **strengths, use case and trade-offs** of each approach. They also illustrate common challenges in parallel computing, such as:
@@ -18,4 +18,5 @@ These projects highlight the **strengths, use case and trade-offs** of each appr
 
 The goal of this repository is to provide clear, practical examples of how different parallel programming models work in C and how they can be applied to real computational problems.
 
-In each subdirectory you can find **Makefiles** for easier compilation and executiion of the programs. You can also find **bash scripts** for result aggregation and speed comparison. These scripts run the source code multiple times for 2-8 threads.
+In each subdirectory you can find a **Makefile** for easier compilation and executiion of the programs. You can also find a **bash script** for results aggregation and speed comparison. These scripts run the source code multiple times for 2-8 threads.
+
