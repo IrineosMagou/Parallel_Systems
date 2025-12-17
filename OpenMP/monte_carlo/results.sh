@@ -11,8 +11,8 @@ IFS=$'\n\t' #This defines how Bash splits words when expanding variables, readin
 readonly NUM_THROWS=$1
 
 # Source and File Configuration
-readonly SOURCE_CODE="monte_carlo"
-readonly HELPER_CODE="../../helpers/my_rand"
+readonly SOURCE_CODE="monte_carlo.c"
+readonly HELPER_CODE="../../helpers/my_rand.c"
 readonly EXECUTABLE="executable"
 
 # Benchmarking Parameters
@@ -32,12 +32,12 @@ declare -A avg_times # Global associative array to store results
 
 function compile_program {
     echo "======================================================"
-    echo " --> Compiling: $SOURCE_CODE.c with $HELPER_CODE.c"
+    echo " --> Compiling: $SOURCE_CODE with $HELPER_CODE"
     echo "======================================================"
     
     # Compile the Monte Carlo program
     # Using global constants
-    gcc -o "$EXECUTABLE" "$SOURCE_CODE.c" "$HELPER_CODE.c" -fopenmp
+    gcc -o "$EXECUTABLE" "$SOURCE_CODE" "$HELPER_CODE" -fopenmp
     
     if [ $? -ne 0 ]; then
         echo "Compilation FAILED. Aborting." >&2

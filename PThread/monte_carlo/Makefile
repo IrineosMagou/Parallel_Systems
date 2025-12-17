@@ -17,11 +17,11 @@ $(EXE): $(SRC)
 
 # Run the program 
 run: $(EXE)
-ifeq ($(and $(N),$(T)),)
-	$(error "Please provide both N and T, e.g., make run N=1000000 T=2. 'make help' for usage information")
+ifeq ($(and $(n),$(t)),)
+	$(error "Please provide both n and t, e.g., make run n=1000000 t=2. 'make help' for usage information")
 endif
 #The hashtag keeps the terminal quiet
-	@./$(EXE) $(N) $(T)
+	@./$(EXE) $(n) $(t)
 
 # Clean up
 clean:
@@ -31,5 +31,5 @@ clean:
 help:
 	@echo "Usage:"
 	@echo "  make            -> compile the program"
-	@echo "  make run N=<num_samples> T=<num_threads>  -> run the program"
+	@echo "  make run n=<num_samples> t=<num_threads>  -> run the program"
 	@echo "  make clean      -> remove the executable"

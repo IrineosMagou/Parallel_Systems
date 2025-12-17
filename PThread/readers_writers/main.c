@@ -6,14 +6,14 @@
  *   Makefile:
  *       make build P_SRC=priority_file.c
  * Usage:
- *   make run m=<m> n=<operations> p=<read_perc> k=<insert_perc> t=<num_of_threads>
+ *   make run m=<m> n=<operations> p=<read_percentage> k=<insert_percentage> t=<num_of_threads>
  *   e.g make run m=1000 n=150000 p=0.95 k=0.03 t=2
  * Aggregate Results:
  *   Use results.sh script to run the source code for both
  *   priority approaches and compare the results.
  *   Usage:
  *     chmod +x results.sh
- *     ./results.sh <m> <operations> <read_perc> <insert_perc>
+ *     ./results.sh <m> <operations> <read_percentage> <insert_percentage>
  */
 
 

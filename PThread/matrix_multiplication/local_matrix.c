@@ -7,18 +7,23 @@
  *     Elapsed time for the initialization
  *     Elapsed time for the computation
  * Compile:  
- *     1. gcc -Wall -o executable local_matrix.c ../../helpers/matrix_mul_helpers -lpthread
+ *     1. gcc -g -Wall -o executable local_matrix.c ../../helpers/matrix_mul_helpers -lpthread
  *     2. make build SRC=local_matrix.c
  * Usage:
  *     1. ./executable <thread_count> <m> <n> <p> <thread_number>
  *     2. make run m=<m> n=<n> p=<p> t=<thread_number>
- * -------------------------------------------------------------------------------------------
- *  Notes:
+ * Aggregate Results:
+ *     Use results.sh script to run the source code multiple times for threads 1-8 
+ *     and get aggregated execution time results
+ *     Usage:
+ *         chmod +x results.sh
+ *         ./results.sh <m> <n> <p> *  Notes:
  *     This program provides threads with their own local array (`my_A`) to 
  *     save the results of their computation block. This strategy isolates 
  *     the intensive calculation phase from the global result matrix (C), 
  *     effectively mitigating the problem of False Sharing. A mutex is used 
  *     only once per thread for the final, fast transfer via `memcpy`.
+ *     Thread Number should divide the dimension of matrix
  */
  
 #include <stdio.h>
@@ -26,7 +31,7 @@
 #include <pthread.h>
 #include <string.h>
 #include "../../helpers/timer.h"
-#include "../../helpers/matrix_mul_helpers.h"
+#include "helpers/matrix_mul_helpers.h"
 
 /* ------------------ Global Variables ------------------ */
 int thread_count;
@@ -82,6 +87,12 @@ int main(int argc, char *argv[]){
     n = strtol(argv[2], NULL, 10);
     p = strtol(argv[3], NULL, 10);
     thread_count = strtol(argv[4], NULL, 10);
+
+    if (n % thread_count != 0){
+        fprintf(stderr, "The threads number should evenly divide n");
+        exit(EXIT_FAILURE);
+    }
+
     int mutexInit = pthread_mutex_init(&mutex_p, NULL);
     if (mutexInit != 0)
     {

@@ -11,9 +11,14 @@
  *     1. gcc -Wall -o executable false_sharing.c ../../helpers/matrix_mul_helpers -lpthread
  *     2. make build SRC=false_sharing.c
  * Usage:
- *     1. ./executable <thread_count> <m> <n> <p> <thread_number>
+ *     1. ./executable <m> <n> <p> <thread_number>
  *     2. make run m=<m> n=<n> p=<p> t=<thread_number>
- *
+ * Aggregate Results:
+ *     Use results.sh script to run the source code multiple times for threads 1-8 
+ *     and get aggregated execution time results
+ *     Usage:
+ *         chmod +x results.sh
+ *         ./results.sh <m> <n> <p>
  * Notes:  
  *     The main problem and showcase here is the false sharing
  *     problem that occurs when multiple threads update different 
@@ -23,14 +28,14 @@
  *     and no data overlaping, at the product matrix where all the
  *     threads write simultaneously the results, even if that is at
  *     different Matrix indices, false sharing arises.   
- *    
+ *     Thread Number should divide the dimension of matrix
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include "../../helpers/timer.h"
-#include "../../helpers/matrix_mul_helpers.h"
+#include "helpers/matrix_mul_helpers.h"
 
 /* ------------------ Global Variables ------------------ */
 int thread_count;

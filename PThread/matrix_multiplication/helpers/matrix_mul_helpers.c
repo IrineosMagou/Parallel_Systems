@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "timer.h"
+#include "../../../helpers/timer.h"
 
 
 /* -------------------- Usage / Help -------------------- */

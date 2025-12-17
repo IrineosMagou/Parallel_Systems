@@ -3,11 +3,21 @@
  *     method.
  *
  * Compile:
- *    gcc -g -Wall -o executable gauss_elim.c gauss_main.c helpers/helpers.c ../../helpers/my_rand.c -fopenmp
+ *    1. gcc -g -Wall -o executable gauss_elim.c gauss_main.c helpers/helpers.c ../../helpers/my_rand.c -fopenmp
+ *    2. make
  * Run:
- *    ./executable <equation> <thread_num> <serial_flag>
+ *    1. ./executable <num_of_equations> <thread_num> 
+ *    2. make run n=<num_of_equations> t=<thread_num>
  * Output:
- *    Elapsed time for the parallel computation
+ *    Elapsed time for the parallel or serial computation
+ * Aggregate Results:
+ *     Use results.sh script to run the source code multiple times for threads 1-8 and get aggregated 
+ *     execution time results
+ *     Usage:
+ *         chmod +x results.sh
+ *         ./results.sh <num_of_equations>
+ * Notes:
+ *    thread_num could be given as 1 for the code to run serial
  */
 
 #include <stdio.h>
@@ -21,13 +31,13 @@
 /* ---------------------- Main Function ----------------------- */
 int main(int argc, char *argv[]){
 // --- 1. Argument Validation and Parsing ---
-    if (argc != 4) Usage(argv[0]);
+    if (argc != 3) Usage(argv[0]);
     double ratio, start, finish;
     unsigned seed = 1, rnd;
-    int i, j, k, col; 
+    int i, j, k, col, serial=0; 
     int n = atoi(argv[1]); //size of the linear system
     int num_of_threads = atoi(argv[2]);
-    int serial = atoi(argv[3]); //flag for serial execution
+    if (num_of_threads == 1) serial = 1; //flag for serial execution
 //x: solution vector, b: Right Hand Side(RHS) 
     double x_parallel[n], b_parallel[n], b_serial[n], x_serial[n];
 

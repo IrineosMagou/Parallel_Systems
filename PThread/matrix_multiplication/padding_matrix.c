@@ -12,21 +12,26 @@
  * Usage:
  *     1. ./executable <thread_count> <m> <n> <p> <thread_number>
  *     2. make run m=<m> n=<n> p=<p> t=<thread_number>
- * -------------------------------------------------------------------------------------------
- *  Notes:
+ * Aggregate Results:
+ *     Use results.sh script to run the source code multiple times for threads 1-8 
+ *     and get aggregated execution time results
+ *     Usage:
+ *         chmod +x results.sh
+ *         ./results.sh <m> <n> <p> *  Notes:
  *     This program solves the false sharing problem by implementing
  *     the padding technique. By adding unused “padding” bytes around 
  *     per-thread data so that each thread’s data occupies its own 
  *     cache line, we ensure threads never touch the same line. This 
  *     keeps their updates independent and avoids false sharing.
+ *     Thread Number should divide the dimension of matrix
  */    
  
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include "../../helpers/timer.h"
-#include "../../helpers/matrix_mul_helpers.h"
 #include <math.h>
+#include "../../helpers/timer.h"
+#include "helpers/matrix_mul_helpers.h"
 
 /* --- Define Padding Constants --- */
 // Cache line size in bytes (e.g., 64 bytes)

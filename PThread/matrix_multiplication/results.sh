@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail #-e:exit on error | -u:treat unset variables as an error | -o pipefail treat unset variables as an error
+IFS=$'\n\t' #This defines how Bash splits words when expanding variables, reading files, etc.
 
 # ==============================================================================
 # BENCHMARK SCRIPT: MATRIX MULTIPLICATION WITH-WITHOUT PADDING
@@ -10,8 +12,7 @@ readonly PROGRAMS=("false_sharing.c" "padding_matrix.c" "local_matrix.c")
 readonly EXECUTABLE="./mm_bench" # Single, consistent executable name
 readonly HELPERS_SRC="../../helpers/matrix_mul_helpers.c"
 readonly THREADS_START=2
-readonly THREADS_INCREMENT=2
-readonly THREADS_COUNT=4 # Runs for 2, 4, 6, 8 threads (4 iterations)
+readonly THREADS=(2 4 8) #Runs for 2, 4, 8 threads (3 iterations)
 readonly RUNS_PER_THREAD=3
 
 # --- Helper Function to Run Benchmarks ---
@@ -41,7 +42,7 @@ run_benchmark() {
     local threads_time=()
     local num_threads=$THREADS_START # Using global constant THREADS_START
 
-    for ((i=1; i<=$THREADS_COUNT; i++)); do # Using global constant THREADS_COUNT
+    for num_threads in "${THREADS[@]}"; do # Using global constant THREADS_COUNT
         local thread_sum=0
         
         echo "  Running with $num_threads threads..."
@@ -68,12 +69,11 @@ run_benchmark() {
         total_time=$(echo "scale=6; $total_time + $thread_sum" | bc)
         
         echo " Done. Avg time: $avg_time s"
-        # Using global constant THREADS_INCREMENT
-        num_threads=$((num_threads + THREADS_INCREMENT))
     done
     
     # Calculate overall average time
-    local total_runs=$((THREADS_COUNT * RUNS_PER_THREAD))
+    #${#THREADS[@]} size of array
+    local total_runs=$((${#THREADS[@]} * RUNS_PER_THREAD))
     local overall_avg
     overall_avg=$(echo "scale=6; $total_time / $total_runs" | bc)
 
@@ -100,15 +100,16 @@ for src_file in "${PROGRAMS[@]}"; do
     run_benchmark "$src_file" "$1" "$2" "$3"
 done
 
-# --- Cleanup ---
-if [ -f "$EXECUTABLE" ]; then
-    rm "$EXECUTABLE"
-fi
-
 echo "======================================================"
 echo "--> ALL BENCHMARKS COMPLETE"
 echo "Results (Thread Averages by Program):"
 for program in "${!program_times[@]}"; do
-    echo "  $program: ${program_times[$program]}"
+    echo "$program: " 
+    echo "${program_times[$program]}"
 done
 echo "======================================================"
+
+# --- Cleanup ---
+if [ -f "$EXECUTABLE" ]; then
+    rm "$EXECUTABLE"
+fi

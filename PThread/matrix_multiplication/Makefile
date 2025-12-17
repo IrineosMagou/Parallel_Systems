@@ -5,8 +5,8 @@
 # The compiler and flags
 CC = gcc
 CFLAGS = -Wall 
-LDFLAGS = -lpthread # Example linker flags (like math library)
-HELPERS_SRC = ../../helpers/matrix_mul_helpers.c
+LDFLAGS = -lpthread 
+HELPERS_SRC = helpers/matrix_mul_helpers.c
 EXE = executable
 # A generic target to compile any executable
 # Target name: 'build'

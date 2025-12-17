@@ -49,7 +49,7 @@ void gauss_elimination(double **A, double b[], double x[], int n, int num_of_thr
             x[row] = temp_sum / A[row][row];
         }
         GET_TIME(finish);
-        printf("Parallel Gauss Elimination took %e\n", finish - start);
+        printf("Parallel Gauss Elimination: %f\n", finish - start);
 
     } else { // Serial execution
         GET_TIME(start);
@@ -69,7 +69,7 @@ void gauss_elimination(double **A, double b[], double x[], int n, int num_of_thr
             x[row] /= A[row][row];
         }
         GET_TIME(finish);
-        printf("Serial Gauss Elimination %e\n", finish - start);
+        printf("Serial Gauss Elimination: %f\n", finish - start);
     }
 }
 

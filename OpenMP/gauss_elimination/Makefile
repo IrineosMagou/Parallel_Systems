@@ -19,11 +19,11 @@ $(EXE): $(SRC)
 
 # Run the program 
 run: $(EXE)
-ifeq ($(and $(n), $(t)), $(s))
+ifeq ($(and $(n), $(t)),)
 	$(error "Please provide equations_num, num_threads and serial_flag. 'make help' for usage information")
 endif
 #The hashtag keeps the terminal quiet
-	@./$(EXE) $(n) $(t) $(s)
+	@./$(EXE) $(n) $(t)
 
 # Clean up
 clean:
@@ -33,5 +33,5 @@ clean:
 help:
 	@echo "Usage:"
 	@echo "  make            -> compile the program"
-	@echo "  make run n=<equations_num> t=<num_threads> s=<serial_flag> -> run the program"
+	@echo "  make run n=<equations_num> t=<num_threads> -> run the program"
 	@echo "  make clean      -> remove the executable"

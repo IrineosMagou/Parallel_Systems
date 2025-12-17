@@ -11,7 +11,7 @@
 
 /* -------------------- Usage / Help -------------------- */
 void Usage(char *prog_name) {
-    fprintf(stderr, "Usage: %s <equations> <threads> <serial_flag>\n", prog_name);
+    fprintf(stderr, "Usage: %s <equations> <threads>\n", prog_name);
     exit(0);
 }
 

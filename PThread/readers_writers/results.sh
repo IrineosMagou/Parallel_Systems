@@ -1,6 +1,6 @@
 #!/bin/bash
-set -euo pipefail
-IFS=$'\n\t'
+set -euo pipefail #-e:exit on error | -u:treat unset variables as an error | -o pipefail treat unset variables as an error
+IFS=$'\n\t' #This defines how Bash splits words when expanding variables, reading files, etc.
 
 # ==============================================================================
 # CONFIGURATION
@@ -92,7 +92,7 @@ run_benchmark() {
 
         echo "  Avg time for $num_threads threads: $avg s"
 
-        total_sum=$(awk "BEGIN {print $total_sum + $sum_run}")
+        total_sum=$(awk "BEGIN {print $total_sum + $sum_run}") #use awk as a calculator here --> The BEGIN { ... } block runs before any input is read
 
         # THREADS_INCREMENT is constant
         num_threads=$((num_threads + THREADS_INCREMENT)) 

@@ -12,8 +12,8 @@
  *     1. executable <number_of_throws> <thread_number> 
  *     2. make run N=<number_of_throws> T=<thread_number>
  * Aggregate Results:
- *     Use results.sh script to run the source code multiple times for threads 1-8 and get aggregated 
- *     execution time results
+ *     Use results.sh script to run the source code multiple times for threads 1-8 
+ *     and get aggregated execution time results
  *     Usage:
  *         chmod +x results.sh
  *         ./results.sh <number_o_throws>

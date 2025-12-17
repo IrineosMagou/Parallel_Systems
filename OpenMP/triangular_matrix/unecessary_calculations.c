@@ -3,12 +3,18 @@
  *     is distributed by block rows.  Vectors are distributed by
  *     blocks.  This version uses a random number generator to
  *     generate A and x. 
- *
  * Compile:
- *    gcc -g -Wall -o executable unecessary_calculations.c helpers/helpers.c -fopenmp 
+ *    1. gcc -g -Wall -o executable only_necessary.c helpers/helpers.c -fopenmp 
+ *    2. make build SRC=filename.c
  * Run:
- *    ./executable <thread_count> <m> <n>
- *
+ *    1. ./executable <thread_count> <m> <n>
+ *    2.  make run t=<t> m=<m> n=<n>
+ * Aggregate Results:
+ *     Use results.sh script to run the source code multiple times for threads 1-8 
+ *     and get aggregated execution time results
+ *     Usage:
+ *         chmod +x results.sh
+ *         ./results.sh <m> <n>
  * Input:
  *    None unless compiled with DEBUG flag.
  *    With DEBUG flag, A, x
