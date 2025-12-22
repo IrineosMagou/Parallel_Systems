@@ -18,6 +18,6 @@ These projects highlight the **strengths, use cases and trade-offs** of each app
 
 The goal of this repository is to provide clear, practical examples of how different parallel programming models work in C and how they can be applied to real computational problems.
 
-In each subdirectory you can find a **Makefile** for easier compilation and execution of the programs. You can also find a **bash script** for results aggregation and speed comparison. These scripts run the source code multiple times for 2-8 threads.
+In each subdirectory you can find a **README.md** file for the specific parallelization method, informations about the problems and the solutions.**Makefile** for easier compilation and execution of the programs. You can also find a **bash script** for results aggregation and speed comparison. These scripts run the source code multiple times for 2-8 threads.
 
 
