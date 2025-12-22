@@ -37,8 +37,8 @@ typedef struct{
 extern read_write_data shared_resources;   
 
 /* ---------------- Helper Functions For Threads --------------- */
-void Usage(char *prog_name);
-void Get_input(int *inserts_in_main_p);
+void usage(char *prog_name);
+void get_input(int *inserts_in_main_p);
 int init_read_write_threads(read_write_data *rw_struct);
 void destroy_read_write_threads(read_write_data *rw_struct);
 void *Thread_task(void *rank);

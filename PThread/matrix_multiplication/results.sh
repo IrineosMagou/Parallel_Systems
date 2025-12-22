@@ -10,7 +10,7 @@ IFS=$'\n\t' #This defines how Bash splits words when expanding variables, readin
 # Programs to benchmark (list of C source files)
 readonly PROGRAMS=("false_sharing.c" "padding_matrix.c" "local_matrix.c") 
 readonly EXECUTABLE="./mm_bench" # Single, consistent executable name
-readonly HELPERS_SRC="../../helpers/matrix_mul_helpers.c"
+readonly HELPERS_SRC="helpers/matrix_mul_helpers.c"
 readonly THREADS_START=2
 readonly THREADS=(2 4 8) #Runs for 2, 4, 8 threads (3 iterations)
 readonly RUNS_PER_THREAD=3

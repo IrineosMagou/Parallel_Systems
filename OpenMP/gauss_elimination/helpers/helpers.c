@@ -10,12 +10,12 @@
 #include "helpers.h"
 
 /* -------------------- Usage / Help -------------------- */
-void Usage(char *prog_name) {
+void usage(char *prog_name){
     fprintf(stderr, "Usage: %s <equations> <threads>\n", prog_name);
     exit(0);
 }
 
-void Print_mtx(int n, double *A[]){
+void print_mtx(int n, double *A[]){
     int i, j;
     for (i = 0; i < n; i++){
         for (j = 0; j < n; j++)
@@ -24,13 +24,13 @@ void Print_mtx(int n, double *A[]){
     }
 }
 
-void Print_vct(int n, double x[]){
+void print_vct(int n, double x[]){
     int i;
     for (i = 0; i < n; i++)
         printf("%.2f ", x[i]);
 }
 
-int Validation(int n, double *A[], double *B[]){
+int validation(int n, double *A[], double *B[]){
     const double epsilon = 1e-8;
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
@@ -39,7 +39,7 @@ int Validation(int n, double *A[], double *B[]){
     return 1;
 }
 
-int Results_validation(int n, double x[], double x0[]){
+int results_validation(int n, double x[], double x0[]){
     const double epsilon = 1e-8;
     for (int i = 0; i < n; i++)
         if (fabs(x[i] - x0[i]) > epsilon)

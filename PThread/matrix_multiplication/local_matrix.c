@@ -46,8 +46,7 @@ void *parallel_product_computation(void *rank);
 
 
 /* -------------- Parallel Matrix Multiplication -------------- */
-void *parallel_product_computation(void *rank)
-{
+void *parallel_product_computation(void *rank){
     long my_rank = (long)rank;
     long int local_m = m / thread_count; // how many lines i need to take care
     int my_first_row = my_rank * local_m;
@@ -56,15 +55,12 @@ void *parallel_product_computation(void *rank)
 
     // GET_TIME(start)
     for (int i = my_first_row; i < my_last_row; i++)
-        for (int k = 0; k < p; k++) { // Column index of C and B
+        for (int k = 0; k < p; k++){ // Column index of C and B
             double sum = 0.0; // Initialize sum for C[i][k]
             
-            for (int j = 0; j < n; j++) { // Inner product loop over n
-                // C[i][k] += A[i][j] * B[j][k]
+            for (int j = 0; j < n; j++) // Inner product loop over n
                 sum += A[i * n + j] * B[j * p + k];
-            }
             
-// Store the final C[i][k] result in the local buffer
 // The index in my_A is relative to the start of the thread's block
             long local_row = i - my_first_row;
             my_A[local_row * p + k] = sum;
@@ -77,12 +73,12 @@ void *parallel_product_computation(void *rank)
     free(my_A);
 
     return NULL;
-
 }
+
 /* ---------------------------- Main Function ---------------------------- */
 int main(int argc, char *argv[]){
 // --- 1. Argument Validation and Parsing ---
-    if (argc != 5) Usage(argv[0]);
+    if (argc != 5) usage(argv[0]);
     m = strtol(argv[1], NULL, 10);
     n = strtol(argv[2], NULL, 10);
     p = strtol(argv[3], NULL, 10);
@@ -94,8 +90,7 @@ int main(int argc, char *argv[]){
     }
 
     int mutexInit = pthread_mutex_init(&mutex_p, NULL);
-    if (mutexInit != 0)
-    {
+    if (mutexInit != 0){
         printf("Something went wrong with mutex cration");
         return 0;
     }
@@ -109,8 +104,8 @@ int main(int argc, char *argv[]){
     printf("Elapsed initializon time = %e seconds\n", finish - start);
 
 // --- 3.  Generate Random Matrices ---     
-    Gen_matrix(A, m, n);
-    Gen_matrix(B, n, p);
+    gen_matrix(A, m, n);
+    gen_matrix(B, n, p);
     
 // --- 4. Create Threads and Join Threads --- 
     pthread_t *thread_handles = malloc(thread_count * sizeof(pthread_t));
@@ -125,7 +120,7 @@ int main(int argc, char *argv[]){
 // Uncomment for comparison
     // D = malloc(m * p * sizeof(double)); // for serial code
     // serial_product_computation(A, B, D, m, n, p); // This is the serial multiplication , to check that results are the same , and to compare time
-    // if(!Results_validation(m*p, C, D)){
+    // if(!results_validation(m*p, C, D)){
     //      fprintf(stderr, " The parallel matrix product is wrong");
     //      exit(0);
     // }

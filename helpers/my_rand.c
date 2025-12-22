@@ -37,8 +37,7 @@
  * 2.  The seed_p argument stores the "state" for the next call to
  *     the function.
  */
-unsigned my_rand(unsigned *seed_p)
-{
+unsigned my_rand(unsigned *seed_p){
     long long z = *seed_p;
     z *= MR_MULTIPLIER;
     // z += MR_INCREMENT;
@@ -51,8 +50,7 @@ unsigned my_rand(unsigned *seed_p)
  * In/out arg:    seed_p
  * Return value:  A new pseudo-random double in the range 0 - 1
  */
-double my_drand(unsigned *seed_p)
-{
+double my_drand(unsigned *seed_p){
     unsigned x = my_rand(seed_p);
     double y = x / (MR_DIVISOR / 2.0); // by doing this , i increase the range of the numbers to [0,2]
     y = y - 1.0;                       // then i sub 1.0 so the number will fall i the ragne of [-1 , 1]

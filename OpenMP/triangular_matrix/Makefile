@@ -8,8 +8,7 @@ CFLAGS = -Wall
 LDFLAGS = -fopenmp 
 HELPERS_SRC = helpers/helpers.c
 EXE = executable
-# A generic target to compile any executable
-# Target name: 'build'
+
 # This target takes the 'SRC' variable from the command line
 build: $(SHARED_OBJ)
 	@if [ -z "$(SRC)" ]; then \

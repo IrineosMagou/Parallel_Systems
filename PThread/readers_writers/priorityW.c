@@ -21,15 +21,13 @@ void *Thread_task(void *rank){
     int my_member_count = 0, my_insert_count = 0, my_delete_count = 0;
     int ops_per_thread = total_ops / thread_count;
 
-    for (i = 0; i < ops_per_thread; i++)
-    {
+    for (i = 0; i < ops_per_thread; i++){
         which_op = my_drand(&seed);//Decide the type of operation -->Read or Write
         val = my_rand(&seed) % MAX_KEY;
-        if (which_op < search_percent)
-        {
+
+        if (which_op < search_percent){
             pthread_mutex_lock(&shared_resources.data_mtx);
-            while (shared_resources.wait_wrt || shared_resources.writing)
-            {
+            while (shared_resources.wait_wrt || shared_resources.writing){
                 shared_resources.wait_read++;
                 pthread_cond_wait(&shared_resources.cond, &shared_resources.data_mtx);
                 shared_resources.wait_read--;
@@ -46,11 +44,9 @@ void *Thread_task(void *rank){
             pthread_mutex_unlock(&shared_resources.data_mtx);
             my_member_count++;
         }
-        else // cause insert or delete , is considered to be a writing operation , so the same locks
-        {
+        else{ // cause insert or delete , is considered to be a writing operation , so the same locks   
             pthread_mutex_lock(&shared_resources.data_mtx);
-            while (shared_resources.reading || shared_resources.writing)
-            {
+            while (shared_resources.reading || shared_resources.writing){
                 shared_resources.wait_wrt++;
                 pthread_cond_wait(&shared_resources.cond0, &shared_resources.data_mtx);
                 shared_resources.wait_wrt--;
@@ -59,16 +55,15 @@ void *Thread_task(void *rank){
             shared_resources.writing++;
             pthread_mutex_unlock(&shared_resources.data_mtx);
 
-            if (which_op < search_percent + insert_percent)
-            {
+            if (which_op < search_percent + insert_percent){
                 Insert(val);
                 my_insert_count++;
             }
-            else
-            { 
+            else{ 
                 Delete(val);
                 my_delete_count++;
             }
+
             pthread_mutex_lock(&shared_resources.data_mtx);
             shared_resources.writing--;
             if (shared_resources.wait_wrt) // writer waiting ? wake him
@@ -86,5 +81,5 @@ void *Thread_task(void *rank){
     pthread_mutex_unlock(&count_mutex);
 
     return NULL;
-} /* Thread_work */
+} 
 

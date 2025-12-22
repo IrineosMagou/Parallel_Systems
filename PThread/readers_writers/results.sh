@@ -6,10 +6,6 @@ IFS=$'\n\t' #This defines how Bash splits words when expanding variables, readin
 # CONFIGURATION
 # ==============================================================================
 
-if [ $# -ne 4 ]; then
-    echo "Usage: $0 <rowsA> <columnsA_rowsB> <columnsB> <numOfPth>"
-    exit 1
-fi
 
 # Global Configuration Constants (UPPERCASE)
 readonly SRC_MAIN="main.c"
@@ -114,6 +110,11 @@ run_benchmark() {
 # ==============================================================================
 # MAIN EXECUTION
 # ==============================================================================
+
+if [ $# -ne 4 ]; then
+    echo "Usage: $0 <rowsA> <columnsA_rowsB> <columnsB> <numOfPth>"
+    exit 1
+fi
 
 echo "Running priorityR..."
 run_benchmark "${SRC_PRIORITY[0]}" "$1" "$2" "$3" "$4"

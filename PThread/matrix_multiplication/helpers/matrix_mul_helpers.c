@@ -6,7 +6,7 @@
 
 
 /* -------------------- Usage / Help -------------------- */
-void Usage(char *prog_name) {
+void usage(char *prog_name){
     fprintf(stderr, "Usage: %s <m> <n> <p> <thread_count>\n", prog_name);
     exit(0);
 }
@@ -14,7 +14,7 @@ void Usage(char *prog_name) {
 /* -------------------- Results Validation -------------------- 
  * Takes two matrices and compares the elements one-by-one. 
  */
- int Results_validation(int n, double x[], double x0[]){
+ int results_validation(int n, double x[], double x0[]){
     const double epsilon = 1e-9;
 
     for (int i = 0; i < n; i++)
@@ -26,7 +26,7 @@ void Usage(char *prog_name) {
 /* -------------------- Print Matrix -------------------- 
  * Example Usage: Print_matrix("We generated", A, m, n);
  */
-void Print_matrix(char *title, double A[], int m, int n) {
+void print_matrix(char *title, double A[], int m, int n) {
     printf("%s\n", title);
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++)
@@ -35,27 +35,27 @@ void Print_matrix(char *title, double A[], int m, int n) {
     }
 
 }
+
 /* ------------------ Generate Random Matrix ------------------ */
-void Gen_matrix(double A[], int m, int n){
+void gen_matrix(double A[], int m, int n){
 
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
             A[i * n + j] = random() / ((double)RAND_MAX);
 } 
+
 /* -------------- Serial Matrix Multiplication -------------- */
 void serial_product_computation(double A[], double B[], double D[], int n, int m, int p){
     double start, finish;
     
     GET_TIME(start);
     for (int i = 0; i < m; i++)     // how many rows
-        for (int k = 0; k < p; k++) // multiply with columns
-        {
+        for (int k = 0; k < p; k++){ // multiply with columns
             D[i * p + k] = 0.0;
 
             for (int j = 0; j < n; j++) // for n elements(rows of A and columns of B)
-            {
                 D[i * p + k] += A[i * n + j] * B[j * p + k];
-            }
+            
         }
     GET_TIME(finish);
     printf("Serial Execution Time = %e seconds\n", finish - start);

@@ -6,9 +6,6 @@ IFS=$'\n\t'
 # BENCHMARK SCRIPT: GAUSSIAN ELIMINATION
 # ==============================================================================
 
-# --- Configuration (Global Constants) ---
-readonly MATRIX_SIZE=$1
-
 # Source and executable configuration
 readonly SOURCE_CODE="gauss_main.c"
 readonly GAUSS_SRC="gauss_elim.c"
@@ -90,6 +87,10 @@ if [ $# -ne 1 ]; then
     echo "Example: $0 1024" >&2
     exit 1
 fi
+
+# --- Configuration (Global Constants) ---
+readonly MATRIX_SIZE=$1
+
 compile_program
 
 echo "--- Starting Benchmark (Matrix Size = $MATRIX_SIZE) ---"

@@ -6,10 +6,6 @@ CFLAGS = -fopenmp
 SRC = monte_carlo.c 
 HELPERS_SRC = ../../helpers/my_rand.c
 EXE = executable
-# .PHONY: all run clean help
-
-# # Default target
-# all: $(EXE)
 
 # Compile the program
 $(EXE): $(SRC)

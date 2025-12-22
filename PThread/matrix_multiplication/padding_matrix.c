@@ -55,7 +55,7 @@ double start, finish;
 void *parallel_product_computation(void *rank);
 
 /* -------------- Parallel Matrix Multiplication with Data Padding -------------- */
-void *parallel_product_computation(void *rank) {
+void *parallel_product_computation(void *rank){
     long my_rank = (long)rank;
     int local_m = m / thread_count;
     int my_first_row = my_rank * local_m;
@@ -64,12 +64,12 @@ void *parallel_product_computation(void *rank) {
     double temp;
 
     GET_TIME(start);
-    for (int i = my_first_row; i < my_last_row; i++) {
+    for (int i = my_first_row; i < my_last_row; i++){
 // Use PADDED_P for indexing matrix C
         for (int k = 0; k < p; k++) {
 // C[i * PADDED_P + k] is now guaranteed to be cache-aligned
             C[i * PADDED_P + k] = 0.0;
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++){
                 temp = A[i * n + j] * B[j * p + k];
                 C[i * PADDED_P + k] += temp;
             }
@@ -82,9 +82,9 @@ void *parallel_product_computation(void *rank) {
 }
 
 /* ---------------------------- Main Function ---------------------------- */
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]){
 // --- 1. Argument Validation and Parsing ---
-    if (argc != 5) Usage(argv[0]);
+    if (argc != 5) usage(argv[0]);
 
     m = strtol(argv[1], NULL, 10);
     n = strtol(argv[2], NULL, 10);
@@ -114,8 +114,8 @@ int main(int argc, char *argv[]) {
            p, PADDED_P, PADDED_P - p);
 
 // --- 3.  Generate Random Matrices --- 
-    Gen_matrix(A, m, n);
-    Gen_matrix(B, n, p);
+    gen_matrix(A, m, n);
+    gen_matrix(B, n, p);
     // Note: C is allocated larger, but Gen_matrix doesn't need C.
 
 // --- 4. Create Threads and Join Threads --- 

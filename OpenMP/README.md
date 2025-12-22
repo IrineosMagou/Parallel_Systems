@@ -14,7 +14,7 @@ This directory solves problems using the **OpenMP** library.
 
 ## Problems
 
-##### 1. **Compute pi with Monte-Carlo approach**
+##### 1. 🎯 **Compute pi with Monte-Carlo approach**
 Suppose we throw darts at a square target with sides measuring 2 meters, with the center of the 
 target being the origin (0,0) of the coordinate system. Suppose also that a circle is inscribed in this square target . The radius of the circle is 1 meter and its area is π square meters. If the points where the darts land are uniformly distributed (and the darts always hit the square target), then the number of arrows that hit the interior of the circle should approximately satisfy the equation:  
             ``` circle_arrows  / number_of_throws = π / 4 ```
@@ -32,7 +32,7 @@ for (throw = 0; throw < number_of_throws; throw++) {
 estimate_π = 4*circle_arrows/((double) number_of_throws);
 ```
 
-##### 2. **Upper Triangular Matrix–Vector Multiplication**
+##### 2. 🧮 **Upper Triangular Matrix–Vector Multiplication**
 Given the dimensions of a matrix, we randomly generate the matrix and a vector initializing them with *double* values. The matrix is divided between the threads by rows.
 Two different OpenMP implementations are provided:
 
@@ -43,14 +43,58 @@ In the second source file, the computation is restricted to only the non-zero el
 
 By parallelizing both versions with OpenMP, this project demonstrates how exploiting matrix structure (upper triangular form) can significantly reduce unnecessary computations while benefiting from multi-threaded execution.
 
-##### 3. **Solving Linear Systems with Gaussian Elimination**
+##### 3. 📐 **Solving Linear Systems with Gaussian Elimination**
+Gaussian elimination is a fundamental numerical algorithm used to solve systems of linear equations of the form:
+```
+Ax=b
+```
+where:
+
+- A is a square matrix of coefficients,
+- b is a known right-hand-side vector,
+- x is the unknown solution vector.
+
+The goal is to systematically transform the system into a simpler equivalent form that can be solved efficientl
 Gaussian elimination consists of two main phases:
 
-- ***Forward Elimination***
-The coefficient matrix is transformed into an upper triangular form by eliminating elements below the main diagonal.
-Due to data dependencies between pivot rows, the outer loop is executed serially, while the row update operations are parallelized using OpenMP.
-- ***Back Substitution***
-Once the matrix is upper triangular, the solution vector is computed starting from the last equation and moving upward.
-The inner summation for each row is parallelized using an OpenMP reduction, allowing multiple threads to compute partial sums efficiently.
+***Phase 1: Forward Elimination***
+
+In the forward elimination phase, the original matrix is transformed into an upper triangular matrix, meaning that all elements below the main diagonal are reduced to zero.
+Conceptually, this is done by:
+
+1. Selecting a ***pivot*** element on the diagonal.
+2. Using the pivot row to eliminate the entries below it in the same column.
+3. Repeating this process column by column until the matrix is triangular.
+
+At the end of this phase, the system has the form:
+```
+𝑎11*𝑥1 +𝑎12*𝑥2 + …=𝑏1
+       𝑎22*𝑥2 + …=𝑏2
+              ⋱
+          𝑎𝑛𝑛*𝑥n =𝑏n
+```
+**Parallelization with OpenMP**
+The elimination process has *data dependencies*:
+Each pivot row must be computed before it can be used to eliminate rows below it. As a result:
+
+- The outer loop over pivot rows is executed serially
+- The row update operations below the pivot are independent and can be parallelized
+
+OpenMP is used to parallelize these independent row updates, allowing multiple threads to eliminate different rows simultaneously while preserving correctness.
+
+***Phase 2: Back Substitution***
+Once the matrix is in upper triangular form, the solution vector is computed using back substitution.
+This phase works from the last equation upward:
+
+1. Solve for the last unknown directly.
+2. Substitute this value into the previous equation.
+3. Continue until all unknowns are computed.
+
+For each equation, the solution involves a summation of known values.
+
+**Parallelization with OpenMP**
+Although the equations themselves must be solved sequentially, the inner summation for each equation is independent. OpenMP is used with a reduction clause to parallelize this summation, allowing multiple threads to compute partial sums efficiently.
+This reduces computation time while respecting the inherent dependencies between equations.
+
 
 The OpenMP implementation parallelizes only the independent computations, ensuring correctness while improving performance on multi-core systems. A serial version is also provided for result validation and performance comparison, demonstrating the speedup achieved through parallel execution.

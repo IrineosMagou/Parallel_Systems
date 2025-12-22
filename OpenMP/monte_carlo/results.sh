@@ -7,8 +7,6 @@ IFS=$'\n\t' #This defines how Bash splits words when expanding variables, readin
 # ==============================================================================
 
 # --- Configuration (Global Constants) ---
-# Argument 1: Number of throws is mandatory input
-readonly NUM_THROWS=$1
 
 # Source and File Configuration
 readonly SOURCE_CODE="monte_carlo.c"
@@ -94,6 +92,10 @@ if [ $# -ne 1 ]; then
     echo "Example: $0 100000000" >&2
     exit 1
 fi
+
+# Argument 1: Number of throws is mandatory input
+readonly NUM_THROWS=$1
+
 compile_program
 
 echo "--- Starting Benchmark (N_THROWS=$NUM_THROWS) ---"

@@ -47,7 +47,7 @@ double start, finish;
 void *parallel_product_computation(void *rank);
 
 /* -------------- Parallel Matrix Multiplication -------------- */
-void *parallel_product_computation(void *rank) {
+void *parallel_product_computation(void *rank){
     long my_rank = (long)rank;
     int local_m = m / thread_count;          // Number of rows assigned to this thread
     int my_first_row = my_rank * local_m;
@@ -56,10 +56,10 @@ void *parallel_product_computation(void *rank) {
     double temp;
 
     GET_TIME(start);
-    for (int i = my_first_row; i < my_last_row; i++) {
-        for (int k = 0; k < p; k++) {
+    for (int i = my_first_row; i < my_last_row; i++){
+        for (int k = 0; k < p; k++){
             C[i * p + k] = 0.0; //"clean" whatever junk happened to be in the memory
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++){
                 temp = A[i * n + j] * B[j * p + k];
                 C[i * p + k] += temp;
             }
@@ -74,9 +74,9 @@ void *parallel_product_computation(void *rank) {
 }
 
 /* ---------------------------- Main Function ---------------------------- */
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]){
 // --- 1. Argument Validation and Parsing ---
-    if (argc != 5) Usage(argv[0]);
+    if (argc != 5) usage(argv[0]);
 
     m = strtol(argv[1], NULL, 10);
     n = strtol(argv[2], NULL, 10);
@@ -96,8 +96,8 @@ int main(int argc, char *argv[]) {
     printf("Elapsed initialization time = %e seconds\n", finish - start);
 
 // --- 3.  Generate Random Matrices --- 
-    Gen_matrix(A, m, n);
-    Gen_matrix(B, n, p);
+    gen_matrix(A, m, n);
+    gen_matrix(B, n, p);
 
 // --- 4. Create Threads and Join Threads --- 
     pthread_t *thread_handles = malloc(thread_count * sizeof(pthread_t));
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 // Uncomment for comparison
     // D = malloc(m * p * sizeof(double)); // for serial code
     // serial_product_computation(A, B, D, m, n, p); // This is the serial multiplication , to check that results are the same , and to compare time
-    // if(!Results_validation(m*p, C, D)){
+    // if(!results_validation(m*p, C, D)){
     //      fprintf(stderr, " The parallel matrix product is wrong");
     //      exit(0);
     // }

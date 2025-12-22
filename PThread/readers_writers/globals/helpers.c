@@ -17,12 +17,12 @@
 list_node_s *head = NULL;
 
 /* -------------------- Usage / Help -------------------- */
-void Usage(char *prog_name){
+void usage(char *prog_name){
     fprintf(stderr, "usage: %s <thread_count>\n", prog_name);
     exit(0);
 } 
  /*-----------------------------------------------------------------*/
-// void Get_input(){
+// void get_input(){
 //     printf("How many keys should be inserted in the main thread?\n");
 //     scanf("%d", inserts_in_main);
 //     printf("How many ops total should be executed?\n");
@@ -35,20 +35,20 @@ void Usage(char *prog_name){
 // } 
 
 /* ----------- Initialize Shared Structure ------------- */
-int init_read_write_threads(read_write_data *rw_struct) {
+int init_read_write_threads(read_write_data *rw_struct){
     int result = 0;
 // 1. Initialize the Mutex
-    if (pthread_mutex_init(&rw_struct->data_mtx, NULL) != 0) {
+    if (pthread_mutex_init(&rw_struct->data_mtx, NULL) != 0){
         perror("Mutex init failed");
         result = -1;
     }
 // 2. Initialize Condition Variables (for reading and writing)
-    if (pthread_cond_init(&rw_struct->cond, NULL) != 0) {
+    if (pthread_cond_init(&rw_struct->cond, NULL) != 0){
         perror("Read condition init failed");
         // Add cleanup code for the mutex here in a production system
         result = -1;
     }
-    if (pthread_cond_init(&rw_struct->cond0, NULL) != 0) {
+    if (pthread_cond_init(&rw_struct->cond0, NULL) != 0){
         perror("Write condition init failed");
         // Add cleanup code for the mutex and cond here
         result = -1;
@@ -63,7 +63,7 @@ int init_read_write_threads(read_write_data *rw_struct) {
 }
 
 /* ------------------ Cleanup Shared Structure ------------------ */
-void destroy_read_write_threads(read_write_data *rw_struct) {
+void destroy_read_write_threads(read_write_data *rw_struct){
     pthread_mutex_destroy(&rw_struct->data_mtx);
     pthread_cond_destroy(&rw_struct->cond);
     pthread_cond_destroy(&rw_struct->cond0);

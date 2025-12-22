@@ -1,5 +1,8 @@
 /* Purpose:  
- *     Computes pi using the Monte Carlo approach.
+ *     Computes pi using the Monte Carlo approach. The total throws are
+ *     distributed across threads equally and each thread calculates 
+ *     it's own circle hits and then these hits are collected back
+ *     to the main thread, summed up and calculate π.
  * Output:
  *     Serial and Parallel execution times
  *     Estimation of pi

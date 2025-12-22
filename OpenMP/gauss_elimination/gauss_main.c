@@ -31,7 +31,7 @@
 /* ---------------------- Main Function ----------------------- */
 int main(int argc, char *argv[]){
 // --- 1. Argument Validation and Parsing ---
-    if (argc != 3) Usage(argv[0]);
+    if (argc != 3) usage(argv[0]);
     double ratio, start, finish;
     unsigned seed = 1, rnd;
     int i, j, k, col, serial=0; 

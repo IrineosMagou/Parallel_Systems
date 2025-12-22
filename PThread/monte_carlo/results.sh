@@ -7,8 +7,6 @@ IFS=$'\n\t' #This defines how Bash splits words when expanding variables, readin
 # ==============================================================================
 
 # --- Configuration (Global Constants) ---
-# Argument 1: Number of throws is mandatory input
-readonly NUM_THROWS=$1
 
 # Source and File Configuration
 readonly SOURCE_CODE="monte_carlo"
@@ -26,10 +24,9 @@ for ((t=2; t<=MAX_THREADS; t+=THREAD_STEP)); do
     THREAD_COUNTS+=($t)
 done
 
-declare -A avg_times # Store average runtimes per thread count
+declare -A AVG_TIMES # Store average runtimes per thread count
 
 # --- Compilation Function ---
-
 function compile_program {
     echo "======================================================"
     echo " --> Compiling: $SOURCE_CODE.c with $HELPER_CODE.c"
@@ -62,7 +59,7 @@ function run_and_average {
         local output
         local current_time
         
-        output=$(./"$EXECUTABLE" "$NUM_THROWS" "$threads")
+        output=$(./"$EXECUTABLE" "$TOTAL_THROWS" "$threads")
         
         # Extract the time using awk, looking for the specific label
         current_time=$(echo "$output" | awk -F: "/$program_type/ {gsub(\" \",\"\",\$2); print \$2}")
@@ -80,8 +77,7 @@ function run_and_average {
     avg_time=$(echo "scale=6; $sum_time / $REPEATS" | bc)
     
     echo " Done."
-    avg_times[$threads]=$avg_time # Store result in global array
-    #echo "  -> Average Time for $threads threads: $avg_time seconds"
+    AVG_TIMES[$threads]=$avg_time 
 }
 
 # --- Main Execution Flow ---
@@ -92,30 +88,29 @@ if [ $# -ne 1 ]; then
     echo "Example: $0 100000000" >&2
     exit 1
 fi
+
+# Argument 1: Number of throws is mandatory input
+readonly TOTAL_THROWS=$1
+
 compile_program
 
-echo "--- Starting Benchmark (N_THROWS=$NUM_THROWS) ---"
+echo "--- Starting Benchmark (N_THROWS=$TOTAL_THROWS) ---"
 
 for threads in "${THREAD_COUNTS[@]}"; do
     run_and_average "$threads"
 done
 
-# --- Results & Speedup ---
+# --- Final Summary ---
+echo "============== BENCHMARK SUMMARY =============="
 
-echo "======================================================"
-echo " --> BENCHMARK RESULTS"
-echo "======================================================"
-
-readonly SERIAL_TIME=${avg_times[1]} 
+readonly SERIAL_TIME=${AVG_TIMES[1]} 
 if [ -z "$SERIAL_TIME" ]; then
     echo "Warning: Serial (1 thread) time not recorded. Cannot compute speedup."
 else
-    echo "Serial Time (1 thread): $SERIAL_TIME seconds"
-    echo "Speedup relative to Serial Time:"
 
     for threads in "${THREAD_COUNTS[@]}"; do
-        speedup=$(echo "scale=3; $SERIAL_TIME / ${avg_times[$threads]}" | bc)
-        printf "  %2s threads -> Time: %8.6f s | Speedup: %5.3fx\n" "$threads" "${avg_times[$threads]}" "$speedup"
+        speedup=$(echo "scale=3; $SERIAL_TIME / ${AVG_TIMES[$threads]}" | bc)
+        printf "  %2s threads -> Time: %8.6f s | Speedup: %5.3fx\n" "$threads" "${AVG_TIMES[$threads]}" "$speedup"
     done
 fi
 

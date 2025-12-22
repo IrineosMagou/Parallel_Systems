@@ -35,11 +35,8 @@ int main(int argc, char *argv[])
     unsigned seed = 1;
     double start, finish;
     char *ptr; // for strtod
-    if (argc != 6)
-    {
-        printf("Usage: %s <int_arg1> <int_arg2>\n", argv[0]);
-        return 1; // Exit with an error code
-    }
+    if (argc != 6) usage(argv[0]);
+    
     inserts_in_main = atoi(argv[1]);
     total_ops = atoi(argv[2]);
     search_percent = strtod(argv[3], &ptr);
@@ -66,7 +63,6 @@ int main(int argc, char *argv[])
     printf("\n");
 #endif
 
-    
     thread_handles = malloc(thread_count * sizeof(pthread_t));
     pthread_mutex_init(&count_mutex, NULL);
 

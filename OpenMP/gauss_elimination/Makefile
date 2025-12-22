@@ -8,10 +8,6 @@ GAUSS_SRC = gauss_elim.c
 HELPERS_SRC = ../../helpers/my_rand.c
 HELPERS_GAUSS_SRC = helpers/helpers.c
 EXE = executable
-# .PHONY: all run clean help
-
-# # Default target
-# all: $(EXE)
 
 # Compile the program
 $(EXE): $(SRC)

@@ -39,14 +39,14 @@
 #include "helpers/helpers.h"
 
 /* -------------------- Function Prototypes -------------------- */
-void Omp_mat_vect(const double A[], const double x[], double y[],
+void omp_mat_vect(const double A[], const double x[], double y[],
                   int m, int n, int thread_count);
 
 /* ---------------------- Main Function ----------------------- */
 int main(int argc, char *argv[]){
 // --- 1. Argument Validation and Parsing ---
     int thread_count, m, n;
-    Get_args(argc, argv, &thread_count, &m, &n);
+    get_args(argc, argv, &thread_count, &m, &n);
 
 // --- 2. Allocate Matrices ---
     double *A = NULL;
@@ -64,19 +64,19 @@ int main(int argc, char *argv[]){
     }
 
 #ifdef DEBUG
-    Read_matrix("Enter the matrix", A, m, n);
-    Print_matrix("We read", A, m, n);
-    Read_vector("Enter the vector", x, n);
-    Print_vector("We read", x, n);
+    read_matrix("Enter the matrix", A, m, n);
+    print_matrix("We read", A, m, n);
+    read_vector("Enter the vector", x, n);
+    print_vector("We read", x, n);
 #else
-    Gen_matrix(A, m, n);
-    Gen_vector(x, n);
+    gen_matrix(A, m, n);
+    gen_vector(x, n);
 #endif
 // --- 3. Invoke OpenMP function ---
-    Omp_mat_vect(A, x, y, m, n, thread_count);
+    omp_mat_vect(A, x, y, m, n, thread_count);
 
 #ifdef DEBUG
-    Print_vector("The product is", y, m);
+pPrint_vector("The product is", y, m);
 #endif
 // --- 5. Free Memory  --- 
     free(A);
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
 }
 
 /* ------------ Parallel Matrix x Vector Multiplication ------------ */
-void Omp_mat_vect(const double A[], const double x[], double y[],
+void omp_mat_vect(const double A[], const double x[], double y[],
                   int m, int n, int thread_count){
     double start, finish;
 
@@ -97,9 +97,9 @@ void Omp_mat_vect(const double A[], const double x[], double y[],
     default(none) private(i,j) shared(A,x,y,m,n) schedule(static)
     for (i = 0; i < m; i++) {
         double sum = 0.0;              // thread-local
-        for (j = 0; j < n; j++) {  // FIXED: correct full row
+        for (j = 0; j < n; j++) // FIXED: correct full row
             sum += A[i * n + j] * x[j];
-        }
+
         y[i] = sum;
     }
 

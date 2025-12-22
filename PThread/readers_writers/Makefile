@@ -10,12 +10,11 @@ SRC = main.c
 HELPERS_SRC = ../../helpers/my_rand.c
 GLOBALS_SRC = globals/globals.c globals/helpers.c
 EXE = executable
-# A generic target to compile any executable
-# Target name: 'build'
-# This target takes the 'SRC' variable from the command line
-build: $(SHARED_OBJ)
+
+# This target takes the 'P_SRC' variable from the command line
+build: 
 	@if [ -z "$(P_SRC)" ]; then \
-		echo "Error: Must provide the source file (e.g., make build SRC=file1.c)"; \
+		echo "Error: Must provide the source file (e.g., make build P_SRC=file1.c)"; \
 		exit 1; \
 	fi
 	@echo "--- Compiling $(SRC) with $(P_SRC) ---"
