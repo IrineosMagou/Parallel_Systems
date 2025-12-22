@@ -40,7 +40,7 @@ for (throw = 0; throw < number_of_throws; throw++) {
 estimate_π = 4*circle_arrows/((double) number_of_throws);
 ```
 
-####  2. 🧮 **Matrix Multiplication**
+#### 2. 🧮 **Matrix Multiplication**
 
 Given the dimensions of two matrices, we randomly generate them initializing them with *double* values. First matrix(A) is divided between the threads by consecutive rows and the second matrix(B) by the corresponding columns so a partial product can be calculated:
 

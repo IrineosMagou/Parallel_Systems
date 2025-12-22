@@ -16,7 +16,7 @@ This directory solves problems using the **MPI library**.
 
 ## Problems
 
-##### 1. 🎯 **Compute pi with Monte-Carlo approach**
+#### 1. 🎯 **Compute pi with Monte-Carlo approach**
 Suppose we throw darts at a square target with sides measuring 2 meters, with the center of the 
 target being the origin (0,0) of the coordinate system. Suppose also that a circle is inscribed in this square target . The radius of the circle is 1 meter and its area is π square meters. If the points where the darts land are uniformly distributed (and the darts always hit the square target), then the number of arrows that hit the interior of the circle should approximately satisfy the equation:  
             ``` circle_arrows  / number_of_throws = π / 4 ```
@@ -34,7 +34,7 @@ for (throw = 0; throw < number_of_throws; throw++) {
 estimate_π = 4*circle_arrows/((double) number_of_throws);
 ```
 
-##### 2. 🧮 **Parallel Matrix–Vector Multiplication**
+#### 2. 🧮 **Parallel Matrix–Vector Multiplication**
 The Matrix is partitioned into equally sized square blocks and each process is responsible for a square.The program assumes that the total number of MPI processes is a perfect square.
 
 ***Each MPI process is responsible for***:

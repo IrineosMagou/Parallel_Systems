@@ -14,7 +14,7 @@ This directory solves problems using the **OpenMP** library.
 
 ## Problems
 
-##### 1. 🎯 **Compute pi with Monte-Carlo approach**
+#### 1. 🎯 **Compute pi with Monte-Carlo approach**
 Suppose we throw darts at a square target with sides measuring 2 meters, with the center of the 
 target being the origin (0,0) of the coordinate system. Suppose also that a circle is inscribed in this square target . The radius of the circle is 1 meter and its area is π square meters. If the points where the darts land are uniformly distributed (and the darts always hit the square target), then the number of arrows that hit the interior of the circle should approximately satisfy the equation:  
             ``` circle_arrows  / number_of_throws = π / 4 ```
@@ -32,7 +32,7 @@ for (throw = 0; throw < number_of_throws; throw++) {
 estimate_π = 4*circle_arrows/((double) number_of_throws);
 ```
 
-##### 2. 🧮 **Upper Triangular Matrix–Vector Multiplication**
+#### 2. 🧮 **Upper Triangular Matrix–Vector Multiplication**
 Given the dimensions of a matrix, we randomly generate the matrix and a vector initializing them with *double* values. The matrix is divided between the threads by rows.
 Two different OpenMP implementations are provided:
 
@@ -43,7 +43,7 @@ In the second source file, the computation is restricted to only the non-zero el
 
 By parallelizing both versions with OpenMP, this project demonstrates how exploiting matrix structure (upper triangular form) can significantly reduce unnecessary computations while benefiting from multi-threaded execution.
 
-##### 3. 📐 **Solving Linear Systems with Gaussian Elimination**
+#### 3. 📐 **Solving Linear Systems with Gaussian Elimination**
 Gaussian elimination is a fundamental numerical algorithm used to solve systems of linear equations of the form:
 ```
 Ax=b
